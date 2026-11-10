@@ -1,0 +1,9 @@
+# 교육용 가상 기록입니다. 서버에서 `find /var/www /var/spool/cron -type f -newermt 2026-10-20 -printf '%TY-%Tm-%Td %TH:%TM:%TS %u %p\n'` 으로 모은 것과 같은 형식으로 만들었습니다.
+# 시각은 모두 +0900. 실제 서버의 기록이 아닙니다.
+2026-10-21 08:50:12 deploy /var/www/app/public/index.php
+2026-10-21 08:50:12 deploy /var/www/app/public/login.php
+2026-10-21 08:50:12 deploy /var/www/app/public/board.php
+2026-10-21 08:50:13 deploy /var/www/app/public/post.php
+2026-10-21 08:50:13 deploy /var/www/app/src/Board.php
+2026-10-24 03:58:41 www-data /var/www/app/public/img/thumb.php
+2026-10-24 04:06:19 www-data /var/spool/cron/crontabs/www-data

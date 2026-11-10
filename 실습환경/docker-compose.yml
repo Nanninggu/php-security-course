@@ -1,0 +1,38 @@
+# PHP 긴급 보안 대응 실습 환경 (교육용)
+#
+#   docker compose up -d --build      실습 서버 시작 (처음에는 몇 분 걸림)
+#   docker compose exec server bash   서버 안으로 들어가기 (SSH 접속과 같은 역할)
+#   docker compose down               끄기. 다시 up 하면 "패치 전" 처음 상태로 돌아간다
+#
+# 패치 전 PHP가 들어 있으므로 이 서버를 인터넷에 공개하지 마세요.
+# 포트는 이 컴퓨터(127.0.0.1)에서만 열리도록 묶어 두었습니다.
+name: php-lab
+
+services:
+  server:
+    build: ./server
+    image: php-lab/server:patch-before
+    container_name: php-lab-server
+    hostname: web01
+    # 종료된 프로세스를 정리해 주는 init을 PID 1로 둔다 (service ... restart가 제대로 동작하려면 필요)
+    init: true
+    # 운영 서버의 root처럼 다른 사용자 프로세스의 실행 파일·메모리 지도를 볼 수 있게 한다 (4-2 restart-check.sh)
+    cap_add: [SYS_PTRACE]
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./app:/var/www/app
+      - ./tools:/opt/lab/tools:ro
+      - ./mitigation:/opt/lab/mitigation:ro
+      - ./training-data:/opt/lab/training-data:ro
+    # memory_limit=-1 완화(3-3)를 쓸 때 서버 전체 메모리를 다 쓰지 않게 하는 바깥 경계
+    mem_limit: 1g
+
+  # 4-3 Docker 실습용: 공식 php 이미지로 만든 앱 컨테이너
+  # docker compose --profile image up -d --build image-app
+  image-app:
+    profiles: ["image"]
+    build: ./image-lab
+    container_name: php-lab-image-app
+    ports:
+      - "127.0.0.1:8081:80"
