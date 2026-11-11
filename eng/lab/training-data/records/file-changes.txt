@@ -1,0 +1,9 @@
+# Fictional training record. Made in the same format as what `find /var/www /var/spool/cron -type f -newermt 2026-10-20 -printf '%TY-%Tm-%Td %TH:%TM:%TS %u %p\n'` collects on a server.
+# All times are +0900. This is not a record from a real server.
+2026-10-21 08:50:12 deploy /var/www/app/public/index.php
+2026-10-21 08:50:12 deploy /var/www/app/public/login.php
+2026-10-21 08:50:12 deploy /var/www/app/public/board.php
+2026-10-21 08:50:13 deploy /var/www/app/public/post.php
+2026-10-21 08:50:13 deploy /var/www/app/src/Board.php
+2026-10-24 03:58:41 www-data /var/www/app/public/img/thumb.php
+2026-10-24 04:06:19 www-data /var/spool/cron/crontabs/www-data

@@ -25,3 +25,24 @@ docker compose up -d --build
 - 실습 서버에는 일부러 **패치 전 PHP**가 들어 있습니다. 포트는 내 컴퓨터(127.0.0.1)에서만 열리도록 묶여 있으니, 설정을 바꿔 외부에 공개하거나 회사 서버에 그대로 올리지 마세요.
 - `training-data/`의 로그와 기록은 교육용 가상 사례이며, IP는 문서 예시용 대역입니다.
 - 정보 기준일: 2026-11-08. 버전 번호와 지원 일정은 사용 시점에 php.net과 사용하는 배포판 공지에서 다시 확인하세요.
+
+---
+
+## English edition
+
+Lab files for the Udemy course **"PHP Security Alert: Is Your Server Really Patched?"**. Everything is under [`eng/`](eng/).
+
+| Path | Content |
+|---|---|
+| `eng/lab/` | The Docker lab server (a small production server running an unpatched PHP), check scripts, temporary mitigation settings and training data, in English. Start here: [`eng/lab/README.md`](eng/lab/README.md) |
+| `eng/exercises/exercises.md` | The 10 exercises |
+| `eng/exercises/exercises_solutions.md` | The solutions (try the exercises yourself first) |
+| `eng/exercises/6-3_report_template.md`, `6-3_example_report.md` | The final assignment report template and an example |
+
+```sh
+git clone https://github.com/Nanninggu/php-security-course.git
+cd php-security-course/eng/lab
+docker compose up -d --build
+```
+
+The English lab uses ports 8090 and 8091 and a separate Compose project, so it can run next to the Korean lab. The server contains an unpatched PHP on purpose; do not expose it to the internet. Information current as of 2026-11-08.

